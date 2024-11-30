@@ -17,7 +17,14 @@
   "dependencies": {
     "@commitlint/cli": "^19.6.0",
     "@commitlint/config-conventional": "^19.6.0",
+    "@emotion/cache": "^11.13.5",
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
+    "@mui/material": "^6.1.9",
+    "@mui/material-nextjs": "^6.1.9",
+    "cookie": "^1.0.2",
     "next": "15.0.3",
+    "node-fetch": "^3.3.2",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106"
   },

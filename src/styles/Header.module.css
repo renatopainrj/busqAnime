@@ -1,0 +1,18 @@
+.header{
+  text-align: center;
+  padding: 8px 10px;
+  --backgroundHeader: #6324C6;;
+  background: var(--backgroundHeader);
+  font-family: var(--font-mulish);
+  font-weight: 400;
+  font-size: 40px;
+  color:#fff;
+}
+
+.buscanimeBusc {
+  color: white; 
+}
+
+.buscanimeAnime {
+  color: #ffa500; 
+}

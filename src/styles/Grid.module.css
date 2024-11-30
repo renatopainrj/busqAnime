@@ -1,0 +1,19 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 4 colunas fixas */
+  gap: 20px; /* Espaçamento entre os cards */
+  padding: 20px;
+
+  /* Responsividade: Ajusta para 1, 2 ou 3 colunas em telas menores */
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(4, 1fr); /* 3 colunas para telas médias */
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(3, 1fr); /* 2 colunas para telas pequenas */
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr; /* 1 coluna para telas muito pequenas */
+  }
+}
