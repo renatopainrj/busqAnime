@@ -4,10 +4,10 @@ import AnimeCard from './AnimeCard'
 
 interface Anime {
   id: number
-  title: string
-  imageUrl: string
+  title: any
+  coverImage: any
   genres: string[]
-  score: number // Percentual de avaliação
+  averageScore: any
 }
 
 interface AnimeGridProps {
@@ -15,17 +15,19 @@ interface AnimeGridProps {
 }
 
 const AnimeGrid: React.FC<AnimeGridProps> = ({ animes }) => {
+  console.log(animes)
   return (
     <section className={styles.grid} aria-label="Anime List">
-      {animes.map((anime) => (
-        <AnimeCard
-          key={anime.id}
-          title={anime.title}
-          imageUrl={anime.imageUrl}
-          genres={anime.genres}
-          score={anime.score}
-        />
-      ))}
+      {!!animes &&
+        animes.map((anime) => (
+          <AnimeCard
+            key={anime.id}
+            title={anime.title?.english}
+            imageUrl={anime.coverImage?.large}
+            genres={anime.genres}
+            score={anime.averageScore}
+          />
+        ))}
     </section>
   )
 }
