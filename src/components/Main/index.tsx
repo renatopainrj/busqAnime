@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import styles from '@/styles/Main.module.css'
 import SearchBar from '../SearchBar'
@@ -7,23 +7,26 @@ import { LoadMoreButton } from '../LoadMoreButton'
 import { useAniList } from '@/context/AnimeList'
 
 const Main = () => {
-  const [activeButton, setActiveButton] = useState('All Formats')
-  const { formats, fetchAniListData } = useAniList()
-  const [dataAnilist, setdataAnilist] = useState<any>([])
+  const { animes, fetchAnimes, currentPage, totalPages, formats } = useAniList()
+  const [search, setSearch] = useState('')
+  const [genre, setGenre] = useState('All Formats')
 
-  useEffect(() => {
-    const loadData = async () => {
-      const data = await fetchAniListData(1, 10)
-      setdataAnilist(data)
-      console.log('Dados do AniList:', data)
+  const handleSearch = (search: string) => {
+    setSearch(search)
+    console.log('çhfdgaljkçfds lçaksjdf lçasdjkf ')
+    if (genre == 'All Formats') {
+      fetchAnimes({ title: search, page: 1 })
+    } else {
+      fetchAnimes({ title: search, genre, page: 1 })
     }
+  }
 
-    loadData()
-  }, [fetchAniListData])
-
-  const handleSearch = (query: string): void => {
-    console.log('Buscando por:', query)
-    // Adicione aqui a lógica para realizar a busca
+  const loadMore = () => {
+    if (genre == 'All Formats') {
+      fetchAnimes({ title: search, page: currentPage + 1 })
+    } else {
+      fetchAnimes({ title: search, genre, page: currentPage + 1 })
+    }
   }
 
   return (
@@ -34,9 +37,16 @@ const Main = () => {
             <button
               key={format}
               className={`${styles.button} ${
-                activeButton === format ? styles.active : ''
+                genre === format ? styles.active : ''
               }`}
-              onClick={() => setActiveButton(format)}
+              onClick={() => {
+                setGenre(format)
+                if (format == 'All Formats') {
+                  fetchAnimes({ title: search, page: 1 })
+                } else {
+                  fetchAnimes({ title: search, genre: format, page: 1 })
+                }
+              }}
             >
               {format}
             </button>
@@ -46,15 +56,17 @@ const Main = () => {
         <SearchBar onSearch={handleSearch} />
       </section>
       <section>
-        <AnimeCard animes={dataAnilist.media} />
+        <AnimeCard animes={animes} />
       </section>
-      <section>
-        <LoadMoreButton
-          onClick={() => {
-            console.log('teste')
-          }}
-        />
-      </section>
+      {currentPage < totalPages && (
+        <section>
+          <LoadMoreButton
+            onClick={async () => {
+              loadMore()
+            }}
+          />
+        </section>
+      )}
     </main>
   )
 }

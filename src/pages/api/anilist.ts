@@ -1,4 +1,3 @@
-// pages/api/anilist.ts
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(
@@ -9,31 +8,43 @@ export default async function handler(
     return res.status(405).json({ message: 'Método não permitido. Use POST.' })
   }
 
-  const { page = 1, perPage = 20 } = req.body
+  const { genre, search, page = 1, perPage = 10 } = req.body
 
+  // Ajusta a query para incluir dinamicamente os filtros
   const query = `
-    query ($page: Int, $perPage: Int) {
+    query ($page: Int, $perPage: Int, $search: String, $genre_in: [String]) {
       Page(page: $page, perPage: $perPage) {
         pageInfo {
           total
           currentPage
           lastPage
-          hasNextPage
         }
-        media {
+        media(search: $search, genre_in: $genre_in) {
           id
           title {
+            romaji
             english
+            native
           }
-          genres
           averageScore
           coverImage {
             large
           }
+          genres
         }
       }
     }
   `
+
+  // Constrói as variáveis com base nos filtros fornecidos
+  const variables: Record<string, any> = { page, perPage }
+
+  if (search) {
+    variables.search = search
+  }
+  if (genre) {
+    variables.genre_in = [genre]
+  }
 
   try {
     const response = await fetch('https://graphql.anilist.co', {
@@ -43,7 +54,7 @@ export default async function handler(
       },
       body: JSON.stringify({
         query,
-        variables: { page, perPage }
+        variables
       })
     })
 

@@ -13,6 +13,7 @@ export const AnimeCard: React.FC<AnimeCardProps> = ({
   genres,
   score
 }) => {
+  console.log({ score })
   return (
     <article className={styles.card}>
       <div className={styles.imageWrapper}>
@@ -31,7 +32,7 @@ export const AnimeCard: React.FC<AnimeCardProps> = ({
           className={styles.score}
           style={{ backgroundColor: getScoreColor(score) }}
         >
-          {score}%
+          {!score ? 0 : score}%
         </div>
       </div>
     </article>

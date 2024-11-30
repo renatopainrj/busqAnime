@@ -22,7 +22,9 @@ const AnimeGrid: React.FC<AnimeGridProps> = ({ animes }) => {
         animes.map((anime) => (
           <AnimeCard
             key={anime.id}
-            title={anime.title?.english}
+            title={
+              anime.title?.english || anime.title?.romaji || anime.title?.native
+            }
             imageUrl={anime.coverImage?.large}
             genres={anime.genres}
             score={anime.averageScore}
