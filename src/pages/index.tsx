@@ -6,6 +6,7 @@ import Main from '@/components/Main'
 import Header from '@/components/Header'
 import Spinner from '@/components/Spinner'
 import { useAniList } from '@/context/AnimeList'
+import withAuth from '@/Hoc/WithAuth'
 
 const mulish = Mulish({
   weight: '400',
@@ -15,7 +16,7 @@ const mulish = Mulish({
   variable: '--font-mulish'
 })
 
-export default function Home() {
+const Home = () => {
   const { loading } = useAniList()
   return (
     <>
@@ -41,3 +42,5 @@ export default function Home() {
     </>
   )
 }
+
+export default withAuth(Home)
