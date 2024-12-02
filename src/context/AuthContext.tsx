@@ -40,7 +40,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   useEffect(() => {
     const code = new URLSearchParams(window.location.search).get('code')
-    console.log({ code })
     if (code && !token) {
       fetchToken(code)
     }

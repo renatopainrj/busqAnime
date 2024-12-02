@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from '@/styles/Grid.module.css'
 import AnimeCard from './AnimeCard'
+import ModalAnimeID from '../ModalAnimeId'
 
 interface Anime {
   id: number
@@ -15,22 +16,36 @@ interface AnimeGridProps {
 }
 
 const AnimeGrid: React.FC<AnimeGridProps> = ({ animes }) => {
-  console.log(animes)
+  const [isOpen, setIsOpen] = useState(false)
+  const [id, setId] = useState(0)
+  const closedModal = () => {
+    setIsOpen(false)
+  }
+
   return (
-    <section className={styles.grid} aria-label="Anime List">
-      {!!animes &&
-        animes.map((anime) => (
-          <AnimeCard
-            key={anime.id}
-            title={
-              anime.title?.english || anime.title?.romaji || anime.title?.native
-            }
-            imageUrl={anime.coverImage?.large}
-            genres={anime.genres}
-            score={anime.averageScore}
-          />
-        ))}
-    </section>
+    <>
+      <ModalAnimeID id={id} isOpen={isOpen} onClose={closedModal} />
+      <section className={styles.grid} aria-label="Anime List">
+        {!!animes &&
+          animes.map((anime) => (
+            <AnimeCard
+              onClick={() => {
+                setId(anime.id)
+                setIsOpen(true)
+              }}
+              key={anime.id}
+              title={
+                anime.title?.english ||
+                anime.title?.romaji ||
+                anime.title?.native
+              }
+              imageUrl={anime.coverImage?.large}
+              genres={anime.genres}
+              score={anime.averageScore}
+            />
+          ))}
+      </section>
+    </>
   )
 }
 

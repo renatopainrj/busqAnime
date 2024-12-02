@@ -5,7 +5,6 @@ import React, {
   useContext,
   ReactNode
 } from 'react'
-import { useAuth } from './AuthContext'
 
 interface Anime {
   id: number
@@ -17,12 +16,17 @@ interface Anime {
   averageScore: number
   genres: string[]
   coverImage: any
+  description?: string
+  status?: string
+  episodes: number
+  seasonYear: number
+  bannerImage: string
 }
 
 interface AniListContextProps {
   formats: string[]
-  isAuthenticated: boolean
   animes: Anime[]
+  anime: Anime
   currentPage: number
   totalPages: number
   loading: boolean
@@ -34,6 +38,7 @@ interface AniListContextProps {
     perPage?: number
   }) => Promise<void>
   fetchGender: () => Promise<any>
+  fetchAnimeId: (id: number) => Promise<any>
   setPage: (page: number) => void
 }
 
@@ -41,9 +46,24 @@ const AniListContext = createContext<AniListContextProps | undefined>(undefined)
 
 export const AniListProvider = ({ children }: { children: ReactNode }) => {
   const [formats, setFormats] = useState<string[]>([])
-  const { isAuthenticated } = useAuth()
 
   const [animes, setAnimes] = useState<Anime[]>([])
+  const [anime, setAnime] = useState<Anime>({
+    id: 0,
+    title: {
+      romaji: '',
+      english: '',
+      native: ''
+    },
+    averageScore: 0,
+    genres: [],
+    coverImage: null,
+    description: '',
+    episodes: 0,
+    status: '',
+    seasonYear: 0,
+    bannerImage: ''
+  })
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [loading, setLoading] = useState(false)
@@ -90,7 +110,6 @@ export const AniListProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  // Função para buscar os gêneros
   const fetchGender = async () => {
     const response = await fetch('/api/gender', {
       method: 'POST',
@@ -98,7 +117,6 @@ export const AniListProvider = ({ children }: { children: ReactNode }) => {
         'Content-Type': 'application/json'
       }
     })
-
     if (!response.ok) {
       throw new Error(
         `Erro ao buscar gêneros do AniList: ${response.statusText}`
@@ -109,13 +127,33 @@ export const AniListProvider = ({ children }: { children: ReactNode }) => {
     return data
   }
 
-  // useEffect para inicializar dados
+  const fetchAnimeId = async (id: number) => {
+    if (id != 0) {
+      const response = await fetch('/api/animeID', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id })
+      })
+
+      if (!response.ok) {
+        throw new Error(
+          `Erro ao buscar gêneros do AniList: ${response.statusText}`
+        )
+      }
+
+      const data = await response.json()
+      setAnime(data)
+    }
+  }
+
   useEffect(() => {
     const init = async () => {
       try {
         fetchAnimes({ page: 1 })
         const { GenreCollection } = await fetchGender()
-        GenreCollection.unshift('All Formats')
+        GenreCollection.unshift('All Genres')
         setFormats(GenreCollection)
       } catch (error) {
         console.error('Erro ao buscar dados do AniList:', error)
@@ -123,7 +161,7 @@ export const AniListProvider = ({ children }: { children: ReactNode }) => {
     }
 
     init()
-  }, [isAuthenticated])
+  }, [])
 
   const setPage = (page: number) => {
     if (page !== currentPage) {
@@ -134,8 +172,8 @@ export const AniListProvider = ({ children }: { children: ReactNode }) => {
   return (
     <AniListContext.Provider
       value={{
+        anime,
         formats,
-        isAuthenticated,
         animes,
         currentPage,
         totalPages,
@@ -143,6 +181,7 @@ export const AniListProvider = ({ children }: { children: ReactNode }) => {
         error,
         fetchAnimes,
         fetchGender,
+        fetchAnimeId,
         setPage
       }}
     >
@@ -151,7 +190,6 @@ export const AniListProvider = ({ children }: { children: ReactNode }) => {
   )
 }
 
-// Hook para usar o contexto
 export const useAniList = () => {
   const context = useContext(AniListContext)
   if (!context) {

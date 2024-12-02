@@ -13,6 +13,7 @@
   transition: background-color 0.3s ease;
   width: 100%; 
   margin: 0 auto;
+  font-family: var(--font-mulish);
 }
 
 .button:hover {

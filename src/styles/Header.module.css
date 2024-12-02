@@ -1,7 +1,7 @@
 .header{
   text-align: center;
   padding: 8px 10px;
-  --backgroundHeader: #6324C6;;
+  --backgroundHeader: #6324C6;
   background: var(--backgroundHeader);
   font-family: var(--font-mulish);
   font-weight: 400;

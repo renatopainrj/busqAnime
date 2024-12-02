@@ -4,6 +4,8 @@ import { Mulish } from 'next/font/google'
 import Footer from '@/components/Footer/intex'
 import Main from '@/components/Main'
 import Header from '@/components/Header'
+import Spinner from '@/components/Spinner'
+import { useAniList } from '@/context/AnimeList'
 
 const mulish = Mulish({
   weight: '400',
@@ -14,6 +16,7 @@ const mulish = Mulish({
 })
 
 export default function Home() {
+  const { loading } = useAniList()
   return (
     <>
       <Head>
@@ -26,6 +29,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={`${mulish.variable}`}>
+        {loading && (
+          <section>
+            <Spinner />
+          </section>
+        )}
         <Header />
         <Main />
         <Footer />

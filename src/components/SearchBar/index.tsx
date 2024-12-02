@@ -13,6 +13,11 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
       onSearch(inputValue)
     }
   }
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch()
+    }
+  }
 
   return (
     <div className={styles.searchBar}>
@@ -22,6 +27,7 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         className={styles.input}
+        onKeyDown={handleKeyDown}
       />
       <button onClick={handleSearch} className={styles.button}>
         Buscar

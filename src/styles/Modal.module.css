@@ -1,67 +1,39 @@
-/* Estiliza o fundo do modal */
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  font-family: var(--font-mulish);
 }
 
-/* Estiliza o conteúdo do modal */
 .modal {
-  background-color: #fff;
+  background: #fff;
+  padding: 1.5rem;
   border-radius: 8px;
   width: 90%;
   max-width: 500px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  animation: fadeIn 0.3s ease-in-out;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
 }
 
-/* Cabeçalho do modal */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.header h2 {
-  margin: 0;
-  font-size: 1.25rem;
-}
-
-/* Botão de fechar */
-.closeButton {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
+.content {
+  font-size: 1rem;
   color: #333;
 }
 
-.closeButton:hover {
-  color: #f00;
-}
-
-/* Corpo do modal */
-.body {
-  padding: 1rem;
-}
-
-/* Animação de entrada */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #000000;
 }

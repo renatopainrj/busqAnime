@@ -1,21 +1,23 @@
 import styles from '@/styles/AnimeCard.module.css'
+import { getScoreColor } from '@/utils'
 
 interface AnimeCardProps {
   title: string
   imageUrl: string
   genres: string[]
   score: number
+  onClick: () => void
 }
 
 export const AnimeCard: React.FC<AnimeCardProps> = ({
   title,
   imageUrl,
   genres,
-  score
+  score,
+  onClick
 }) => {
-  console.log({ score })
   return (
-    <article className={styles.card}>
+    <article className={styles.card} onClick={() => onClick()}>
       <div className={styles.imageWrapper}>
         <img src={imageUrl} alt={title} className={styles.image} />
       </div>
@@ -37,13 +39,6 @@ export const AnimeCard: React.FC<AnimeCardProps> = ({
       </div>
     </article>
   )
-}
-
-// Define cores baseadas no valor do rating
-const getScoreColor = (score: number) => {
-  if (score >= 80) return '#4caf50' // Verde
-  if (score >= 51) return '#ff9800' // Laranja
-  return '#f44336' // Vermelho
 }
 
 export default AnimeCard

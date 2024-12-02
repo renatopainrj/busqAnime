@@ -9,12 +9,11 @@ import { useAniList } from '@/context/AnimeList'
 const Main = () => {
   const { animes, fetchAnimes, currentPage, totalPages, formats } = useAniList()
   const [search, setSearch] = useState('')
-  const [genre, setGenre] = useState('All Formats')
+  const [genre, setGenre] = useState('All Genres')
 
   const handleSearch = (search: string) => {
     setSearch(search)
-    console.log('çhfdgaljkçfds lçaksjdf lçasdjkf ')
-    if (genre == 'All Formats') {
+    if (genre == 'All Genres') {
       fetchAnimes({ title: search, page: 1 })
     } else {
       fetchAnimes({ title: search, genre, page: 1 })
@@ -22,7 +21,7 @@ const Main = () => {
   }
 
   const loadMore = () => {
-    if (genre == 'All Formats') {
+    if (genre == 'All Genres') {
       fetchAnimes({ title: search, page: currentPage + 1 })
     } else {
       fetchAnimes({ title: search, genre, page: currentPage + 1 })
@@ -41,7 +40,7 @@ const Main = () => {
               }`}
               onClick={() => {
                 setGenre(format)
-                if (format == 'All Formats') {
+                if (format == 'All Genres') {
                   fetchAnimes({ title: search, page: 1 })
                 } else {
                   fetchAnimes({ title: search, genre: format, page: 1 })
@@ -58,6 +57,7 @@ const Main = () => {
       <section>
         <AnimeCard animes={animes} />
       </section>
+
       {currentPage < totalPages && (
         <section>
           <LoadMoreButton

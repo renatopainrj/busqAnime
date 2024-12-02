@@ -6,6 +6,7 @@
   max-width: 800px;
   margin: auto;
   padding: 10px 0 10px 0;
+  font-family: var(--font-mulish);
 }
 
 .input {

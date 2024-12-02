@@ -8,40 +8,83 @@ export default async function handler(
     return res.status(405).json({ message: 'Método não permitido. Use POST.' })
   }
 
-  const { genre, search, page = 1, perPage = 10 } = req.body
+  const { id } = req.body
 
   const query = `
-    query ($page: Int, $perPage: Int, $search: String, $genre_in: [String]) {
-      Page(page: $page, perPage: $perPage) {
-        pageInfo {
-          total
-          currentPage
-          lastPage
-        }
-        media(search: $search, genre_in: $genre_in) {
+    query ($id: Int) {
+  Media(id: $id) {
+    id
+    title {
+      romaji
+      english
+      native
+    }
+    description
+    status
+    genres
+    averageScore
+    popularity
+    episodes
+    duration
+    season
+    seasonYear
+    format
+    studios {
+      nodes {
+        id
+        name
+      }
+    }
+    characters {
+      edges {
+        role
+        node {
           id
-          title {
-            romaji
-            english
+          name {
+            full
             native
           }
-          averageScore
-          coverImage {
+          image {
             large
           }
-          genres
         }
       }
     }
+    staff {
+      edges {
+        role
+        node {
+          id
+          name {
+            full
+            native
+          }
+          image {
+            large
+          }
+        }
+      }
+    }
+    coverImage {
+      large
+      medium
+    }
+    bannerImage
+    tags {
+      id
+      name
+      description
+      rank
+    }
+  }
+}
+
   `
 
-  const variables: Record<string, any> = { page, perPage }
+  const variables: Record<string, any> = { id }
 
-  if (search) {
-    variables.search = search
-  }
-  if (genre) {
-    variables.genre_in = [genre]
+  if (id) {
+    variables.id = id
   }
 
   try {
@@ -62,7 +105,7 @@ export default async function handler(
 
     const data = await response.json()
 
-    res.status(200).json(data.data.Page)
+    res.status(200).json(data.data.Media)
   } catch (error) {
     console.error('Erro ao buscar dados do AniList:', error)
     res.status(500).json({
