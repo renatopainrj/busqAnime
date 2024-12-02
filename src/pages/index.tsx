@@ -6,7 +6,6 @@ import Main from '@/components/Main'
 import Header from '@/components/Header'
 import Spinner from '@/components/Spinner'
 import { useAniList } from '@/context/AnimeList'
-import withAuth from '@/Hoc/WithAuth'
 
 const mulish = Mulish({
   weight: '400',
@@ -43,4 +42,4 @@ const Home = () => {
   )
 }
 
-export default withAuth(Home)
+export default Home
