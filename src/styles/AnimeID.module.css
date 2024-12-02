@@ -4,7 +4,7 @@
   border-radius: 8px;
   background-color: #fff;
   transition: transform 0.3s ease;
-  height: 75vh;
+  max-height: 75vh;
   overflow: auto;
   font-family: var(--font-mulish);
 }
