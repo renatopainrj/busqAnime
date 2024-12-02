@@ -40,6 +40,7 @@ interface AniListContextProps {
   fetchGender: () => Promise<any>
   fetchAnimeId: (id: number) => Promise<any>
   setPage: (page: number) => void
+  clearAnime: () => void
 }
 
 const AniListContext = createContext<AniListContextProps | undefined>(undefined)
@@ -147,6 +148,24 @@ export const AniListProvider = ({ children }: { children: ReactNode }) => {
       setAnime(data)
     }
   }
+  const clearAnime = () => {
+    setAnime({
+      id: 0,
+      title: {
+        romaji: '',
+        english: '',
+        native: ''
+      },
+      averageScore: 0,
+      genres: [],
+      coverImage: null,
+      description: '',
+      episodes: 0,
+      status: '',
+      seasonYear: 0,
+      bannerImage: ''
+    }) // Limpa os dados do anime
+  }
 
   useEffect(() => {
     const init = async () => {
@@ -172,6 +191,7 @@ export const AniListProvider = ({ children }: { children: ReactNode }) => {
   return (
     <AniListContext.Provider
       value={{
+        clearAnime,
         anime,
         formats,
         animes,

@@ -9,14 +9,18 @@ interface Props {
   onClose: () => void
   id: number
 }
-const ModalAnimeID: React.FC<Props> = ({ isOpen, onClose, id }) => {
-  const { anime, fetchAnimeId } = useAniList()
+const ModalAnimeID: React.FC<Props> = ({ isOpen = false, onClose, id }) => {
+  const { anime, fetchAnimeId, clearAnime } = useAniList()
   useEffect(() => {
-    const init = async () => {
-      await fetchAnimeId(id)
+    if (isOpen && id) {
+      const init = async () => {
+        await fetchAnimeId(id)
+      }
+      init()
+    } else {
+      clearAnime()
     }
-    init()
-  }, [id])
+  }, [isOpen, id])
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <article className={styles.card}>
