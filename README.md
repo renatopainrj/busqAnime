@@ -28,6 +28,8 @@ yarn install
 ### **Configurar variaveis de ambiente**
 Crie um arquivo .env.local na raiz do projeto com as seguintes variáveis:
 **obs: Para teste local com autenticação do AniList**
+**Para criar as variaveis necessarias, é preciso criar conta no [aniList](https://anilist.co/)**
+[documentação](https://docs.anilist.co/guide/auth/) para o auxilio para a criação das variaveis 
 ```.env
 NEXT_PUBLIC_CLIENT_ID=SEU_CLIENT_ID_ANILIST
 NEXT_PUBLIC_REDIRECT_URI=SEU_REDIRECT_URI
