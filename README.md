@@ -1,40 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# **BuscAnime 🎥🎌**
 
-## Getting Started
+Uma aplicação de busca de animes utilizando a API do AniList, construída com **Next.js**, **React** e **TypeScript**.  
+O projeto utiliza autenticação OAuth para conectar-se ao AniList e oferece funcionalidades como busca por título ou gênero, além de exibir detalhes sobre os animes encontrados.
 
-First, run the development server:
+---
+
+## **🚀 Instalação e Configuração**
+
+### **📋 Pré-requisitos**
+
+- **Node.js** (v16 ou superior)
+- **npm** ou **yarn**
+
+### **Clonar o repositório**
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/renatopainrj/busqAnime.git
+cd busqAnime
+
+````
+### **🔧 Instalar dependências**
+
+Com yarn
+```bash
+yarn install
+````
+### **Configurar variaveis de ambiente**
+Crie um arquivo .env.local na raiz do projeto com as seguintes variáveis:
+**obs: Para teste local com autenticação do AniList**
+```.env
+NEXT_PUBLIC_CLIENT_ID=SEU_CLIENT_ID_ANILIST
+NEXT_PUBLIC_REDIRECT_URI=SEU_REDIRECT_URI
+NEXT_PUBLIC_API_URL=https://graphql.anilist.co
+````
+## **⚙ Executando o projeto**
+```bash
+yarn run dev
+```
+Acesse a aplicação em seu navegador: http://localhost:3000
+
+## **⌨️ Teste de estilo de código**
+```bash
+yarn lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### **🛠️ Construido com**
+* [NextJS](https://nextjs.org/docs) - Framework Reac
+* [ReactJS](https://react.dev/reference/react) - Biblioteca JavaScript para interfaces
+* [Typescript](https://www.typescriptlang.org/) - linguagem de programação fortemente tipada que se baseia em JavaScript
+* [CSS Module](https://github.com/css-modules/css-modules) - Estilização isolada
+* [AniList](https://docs.anilist.co/guide/introduction) - API de animes usada no projeto
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## **Estrutura do projeto**
+```
+├── components/         # Componentes reutilizáveis da aplicação
+├── contexts/           # Gerenciamento de estados globais com Context API
+├── pages/              # Páginas do Next.js
+│   ├── api/            # Rotas da API (Next.js)
+│   ├── index.tsx       # Página inicial
+├── public/             # Arquivos estáticos
+├── styles/             # Estilos globais e módulos CSS
+├── package.json        # Configuração do projeto
+└── README.md           # Documentação do projeto
+```
+## **☎️Endpoints da api**
+**Todas as rotas utilizando método: `POST`**
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+* **Rota** `/api/anilist`
+Realiza buscas na API AniList utilizando paginação.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+* **Rota** `/api/gender`
+Retorna uma lista de gêneros disponíveis.
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* **Rota** `/api/animeID`
+Realiza buscas na API AniList com o o ID.
 
-## Learn More
+* **Rota** `/api/token`
+Realiza buscas na API AniList para a utilização da autenticação da API.
 
-To learn more about Next.js, take a look at the following resources:
+## **🛜Hospedagem**
+[Netlify](https://www.netlify.com/) - Serviço de hospedagem
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+Acesse o [BuscAnimes](https://buscanimes.netlify.app/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## **👀 Obeservações**
+A autenticação foi implementada local, para fins de teste.
+O arquivo `/src/pages/index.tsx` esta com o configurado para não solicitar a autenticação, para alterar, basta alterar a linha comentada
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## **Outros**
+Foram utilizados na configuração do projeto
+* EsLit
+* Prettier
+* Husky
+* Commitlint
+* Lint-staged
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
